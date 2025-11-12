@@ -151,12 +151,12 @@ def train(
     return epoch_train_errors, epoch_val_errors
 
 
-def plot_training(train_errors, val_errors):
+def plot_training(train_errors, val_errors, n_hidden ):
     # Graficar los errores
     plt.figure(figsize=(10, 5))  # Define el tamaño de la figura
     plt.plot(train_errors, label="Train Loss")  # Grafica la pérdida de entrenamiento
     plt.plot(val_errors, label="Validation Loss")  # Grafica la pérdida de validación
-    plt.title("Training and Validation Loss")  # Título del gráfico
+    plt.title("Training and Validation Loss - Hidden Size: " + str(n_hidden))  # Título del gráfico
     plt.xlabel("Epochs")  # Etiqueta del eje X
     plt.ylabel("Loss")  # Etiqueta del eje Y
     plt.legend()  # Añade una leyenda

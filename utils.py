@@ -135,18 +135,25 @@ def train(
         )  # evaluamos el modelo en el conjunto de validacion
         epoch_val_errors.append(val_loss)  # guardamos la perdida de validacion
 
-        if do_early_stopping:
-            early_stopping(val_loss)  # llamamos al early stopping
+        # Comento el early stopping, vamos a parar cuando error de train = 0
+        #if do_early_stopping:
+        #    early_stopping(val_loss)  # llamamos al early stopping
+
+        if train_loss <= 1e-8: # casi 0
+            print(
+                f"Entrenamiento detenido en la época {epoch + 1} porque el error de entrenamiento llegó a cero ({train_loss:.6f})."
+            )
+            break            
 
         if log_fn is not None:  # si se pasa una funcion de log
             if (epoch + 1) % log_every == 0:  # loggeamos cada log_every epocas
                 log_fn(epoch, train_loss, val_loss, epochs)  # llamamos a la funcion de log
 
-        if do_early_stopping and early_stopping.early_stop:
-            print(
-                f"Detener entrenamiento en la época {epoch}, la mejor pérdida fue {early_stopping.best_score:.5f}"
-            )
-            break
+        #if do_early_stopping and early_stopping.early_stop:
+        #    print(
+        #        f"Detener entrenamiento en la época {epoch}, la mejor pérdida fue {early_stopping.best_score:.5f}"
+         #   )
+         #   break
 
     return epoch_train_errors, epoch_val_errors
 
